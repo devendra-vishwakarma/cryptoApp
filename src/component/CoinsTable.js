@@ -1,3 +1,4 @@
+// src/components/CoinsTable.js
 import React, { useEffect, useState } from 'react';
 import { CoinList } from '../config/api';
 import {
@@ -14,21 +15,26 @@ import {
     TextField,
     ThemeProvider,
     Typography,
+    IconButton
 } from '@material-ui/core';
 import { CryptoState } from '../CryptoContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Pagination } from '@material-ui/lab';
+import { Favorite } from '@mui/icons-material'; // Import Favorite icon
+import { useFav } from './FavContext'; // Import useFav hook
 
 function CoinsTable() {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
-    const [displayCount, setDisplayCount] = useState(5); // Number of items to display at a time
 
+    console.log(coins);
+    
     const navigate = useNavigate();
     const { currency } = CryptoState();
+    const  {addToFavorites}  = useFav();
 
     const fetchCoins = async () => {
         setLoading(true);
@@ -41,28 +47,12 @@ function CoinsTable() {
         fetchCoins();
     }, [currency]);
 
-
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
-                setDisplayCount((prev) => prev + 5); // Load 5 more items
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
     const darkTheme = createTheme({
         palette: {
             primary: {
                 main: "#fff",
             },
-            type: "dark", 
+            type: "dark",
         },
     });
 
@@ -90,8 +80,6 @@ function CoinsTable() {
 
     const classes = useStyle();
 
-    const displayCoins = handleSearch().slice(0, displayCount); // Show only the number of items as per displayCount
-
     return (
         <ThemeProvider theme={darkTheme}>
             <Container style={{ textAlign: "center" }}>
@@ -114,7 +102,7 @@ function CoinsTable() {
                         <Table>
                             <TableHead style={{ backgroundColor: "#EEBC1D" }}>
                                 <TableRow>
-                                    {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
+                                    {["Coin", "Price", "24h Change", "Market Cap", "Favorite"].map((head) => (
                                         <TableCell
                                             style={{
                                                 color: "black",
@@ -136,6 +124,7 @@ function CoinsTable() {
                                     return (
                                         <TableRow
                                             onClick={() => navigate(`/coins/${row.id}`)}
+                                            className={classes.row}
                                             key={row.id}
                                         >
                                             <TableCell
@@ -175,10 +164,18 @@ function CoinsTable() {
                                                     color: profit ? "green" : "red",
                                                 }}
                                             >
-                                                <mark style={profit ? { color: "green", fontSize: "1rem" } : { color: "red", fontSize: "1rem" }}>
-                                                    {profit && "+"}
-                                                    {row.price_change_percentage_24h.toFixed(2)}%
-                                                </mark>
+                                                {profit && "+"}
+                                                {row.price_change_percentage_24h.toFixed(2)}%
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <IconButton
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); 
+                                                        addToFavorites(row);
+                                                    }}
+                                                >
+                                                    <Favorite style={{ color: "white" }} />
+                                                </IconButton>
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -187,24 +184,20 @@ function CoinsTable() {
                         </Table>
                     )}
                 </TableContainer>
-
-                {/*--------Pagination--------*/}
                 <Pagination
-                count={(handleSearch()?.length / 10).toFixed(0)}
-                style={{
-                    padding:20,
-                    width:"100%",
-                    display:"flex",
-                    justifyContent:"center",
-                }}
-                classes={{ul:classes.pagination}}
-                onChange={(_, value) => {
-                    setPage(value);
-                    window.scroll(0, 450);
-                }}
-                >
-                </Pagination>
-
+                    count={(handleSearch()?.length / 10).toFixed(0)}
+                    style={{
+                        padding: 20,
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                    classes={{ ul: classes.pagination }}
+                    onChange={(_, value) => {
+                        setPage(value);
+                        window.scroll(0, 450);
+                    }}
+                />
             </Container>
         </ThemeProvider>
     );
