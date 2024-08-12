@@ -72,7 +72,7 @@ function Coin() {
 
   useEffect(() => {
     fetchCoin();
-  }, [id]); // Add 'id' to the dependency array
+  }, []); //dependency =
 
   const classes = useStyles(); // Call useStyles()
 

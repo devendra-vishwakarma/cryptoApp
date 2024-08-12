@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core';
 import SignupForm from './component/SingUpForm';
 import FavList from './component/FavList';
 import { FavProvider } from './component/FavContext';
+import LogOut from './component/LogOut';
 
 const useStyles = makeStyles(() => ({
   App: {
@@ -28,6 +29,7 @@ function App() {
           <Route path='/coins/:id' element={<Coin />} />
           <Route path='/signUp' element={<SignupForm />} />
           <Route path='/addCart' element={<FavList />} />
+          <Route path='/logout' element={<LogOut />} />
         </Routes>
       </div>
     </FavProvider>

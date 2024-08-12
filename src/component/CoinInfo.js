@@ -20,7 +20,7 @@ function CoinInfo({ coin }) {
 
   useEffect(() => {
     fetchHistoricalData();
-  }, [currency, days]);
+  }, [currency, days]);   // dependency = currency,days
 
   const darkTheme = createTheme({
     palette: {
