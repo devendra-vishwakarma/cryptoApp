@@ -8,6 +8,7 @@ import SignupForm from './component/SingUpForm';
 import FavList from './component/FavList';
 import { FavProvider } from './component/FavContext';
 import LogOut from './component/LogOut';
+import StockBuySell from './component/StockBuySell';
 
 const useStyles = makeStyles(() => ({
   App: {
@@ -30,6 +31,8 @@ function App() {
           <Route path='/signUp' element={<SignupForm />} />
           <Route path='/addCart' element={<FavList />} />
           <Route path='/logout' element={<LogOut />} />
+          <Route path='/buysellstock' element={<StockBuySell />} />
+          <Route path='/signUpForm' element={<SignupForm />} />
         </Routes>
       </div>
     </FavProvider>

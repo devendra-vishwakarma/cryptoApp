@@ -12,8 +12,10 @@ export const FavProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const addToFavorites = (coin) => {
-        setFavorites(prevFavs => [...prevFavs, coin]);
-        navigate('/addCart');
+        if (coin) {
+            setFavorites(prevFavs => [...prevFavs, coin]);
+            alert("sucessfully added");
+        }
     };
 
     const removeFromFavorites = (id) => {

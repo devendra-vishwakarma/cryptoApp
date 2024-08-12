@@ -29,6 +29,7 @@ function HomeIcon(props) {
   );
 }
 
+
 const useStyles = makeStyles(() => ({
   title: {
     flex: 1,
@@ -88,7 +89,9 @@ function Header() {
               alignItems: "center",
               justifyContent: 'center'
             }}>
-              <HomeIcon color="action" />
+              <div onClick={()=>{navigate("/")}}>
+                <HomeIcon color="action" />
+              </div>
               <IconButton
                 style={{
                   height: 40,
@@ -102,8 +105,8 @@ function Header() {
                 color="inherit"
                 onClick={handleCartClick}
               >
-                <div onClick={()=>{navigate("/addCart")}}>
-                  <Badge  color="secondary">
+                <div onClick={() => { navigate("/addCart") }}>
+                  <Badge color="secondary">
                     <ShoppingCartIcon />
                   </Badge>
                 </div>
