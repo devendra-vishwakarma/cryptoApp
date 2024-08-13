@@ -37,7 +37,7 @@ const SignupForm = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Sign Up
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{background:"gold",padding:"2rem",borderRadius:"2rem"}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
