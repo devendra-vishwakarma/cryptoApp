@@ -1,4 +1,3 @@
-// src/SignupForm.js
 import React, { useState } from "react";
 import {
   TextField,
@@ -7,6 +6,7 @@ import {
   Typography,
   Container,
   Box,
+  FormControl,
 } from "@mui/material";
 
 const SignupForm = () => {
@@ -32,64 +32,185 @@ const SignupForm = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box mt={5}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Sign Up
-        </Typography>
-        <form onSubmit={handleSubmit} style={{background:"gold",padding:"2rem",borderRadius:"2rem"}}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                label="First Name"
-                name="firstName"
-                variant="outlined"
-                fullWidth
-                value={formData.firstName}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Last Name"
-                name="lastName"
-                variant="outlined"
-                fullWidth
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Email"
-                name="email"
-                type="email"
-                variant="outlined"
-                fullWidth
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Password"
-                name="password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary" fullWidth>
+    <div className="d-flex align-item-center justify-content-center">
+      <div
+        style={{
+          width: "30%",
+          padding: "2rem",
+          boxShadow: "0px 4px 20px #77DD77",
+          borderRadius: "16px",
+        }}
+        className="d-flex align-item-center justify-content-center mt-5"
+      >
+        <Container
+          maxWidth="xs"
+          className="d-flex justify-content-center align-item-center"
+        >
+          <Box component="form" onSubmit={handleSubmit} noValidate>
+            <Typography variant="h5" gutterBottom className="mb-3">
+              <span
+                style={{
+                  color: "#77DD77",
+                  fontWeight: "bold",
+                  fontSize: "2rem",
+                }}
+              >
                 Sign Up
-              </Button>
+              </span>
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="First Name"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: "16px",
+                      boxShadow: "0px 0px 0px #77DD77",
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#77DD77",
+                          borderRadius: "16px",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#999", // Default label color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#77DD77", // Green label color when focused
+                      },
+                      "& .MuiInputBase-input::placeholder": {
+                        color: "#77DD77", // Green placeholder color
+                        opacity: 1,
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Last Name"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: "16px",
+                      boxShadow: "0px 0px 0px #77DD77",
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#77DD77",
+                          borderRadius: "16px",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#999", // Default label color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#77DD77", // Green label color when focused
+                      },
+                      "& .MuiInputBase-input::placeholder": {
+                        color: "#77DD77", // Green placeholder color
+                        opacity: 1,
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: "16px",
+                      boxShadow: "0px 0px 0px #77DD77",
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#77DD77",
+                          borderRadius: "16px",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#999", // Default label color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#77DD77", // Green label color when focused
+                      },
+                      "& .MuiInputBase-input::placeholder": {
+                        color: "#77DD77", // Green placeholder color
+                        opacity: 1,
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: "16px",
+                      boxShadow: "0px 0px 0px #77DD77",
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#77DD77",
+                          borderRadius: "16px",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#999", // Default label color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#77DD77",
+                        fontWeight:"bold" // Green label color when focused
+                      },
+                      "& .MuiInputBase-input::placeholder": {
+                        color: "#77DD77", // Green placeholder color
+                        opacity: 1,
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className="p-2"
+                  fullWidth
+                  style={{
+                    background: "#34B335",
+                    fontWeight: "bold",
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </Container>
+          </Box>
+        </Container>
+      </div>
+    </div>
   );
 };
 
