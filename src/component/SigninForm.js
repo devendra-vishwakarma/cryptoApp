@@ -10,22 +10,17 @@ import {
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import validator from "validator"; // Import validator for email validation
 import { useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
+const SignInForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
   });
@@ -42,22 +37,8 @@ const SignupForm = () => {
 
     // Validate fields
     let newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "First Name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last Name is required.";
-
-    // Email validation
-    if (!formData.email) {
-      newErrors.email = "Email is required.";
-    } else if (!validator.isEmail(formData.email)) {
-      newErrors.email = "Invalid email address.";
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = "Password is required.";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
-    }
+    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.password) newErrors.password = "Password is required.";
 
     // Set errors if any
     if (Object.keys(newErrors).length > 0) {
@@ -65,17 +46,17 @@ const SignupForm = () => {
       return; // Stop form submission if there are errors
     }
 
-    // Handle form submission (e.g., send to server)
-    localStorage.setItem("user", JSON.stringify(formData));
-    console.log("Form data:", formData);
-
-    // Clear errors after successful submission
-    setErrors({});
-
-    // Display success message
-    toast.success("Sign Up Successful!");
-
-    setTimeout(() => { navigate("/signIn") }, 1000)
+    // Handle form submission (e.g., check credentials)
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser && storedUser.email === formData.email && storedUser.password === formData.password) {
+      toast.success("Sign In Successful!");
+      // Redirect or further actions here
+    } else {
+      toast.error("Invalid credentials");
+    }
+    setTimeout(() => {
+      navigate("/")
+    }, 500)
   };
 
   return (
@@ -102,78 +83,10 @@ const SignupForm = () => {
                   fontSize: "2rem",
                 }}
               >
-                Sign Up
+                Sign In
               </span>
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    label="First Name"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    error={!!errors.firstName}
-                    helperText={errors.firstName}
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: "16px",
-                      boxShadow: "0px 0px 0px #77DD77",
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#77DD77",
-                          borderRadius: "16px",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#77DD77", // Default label color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "#77DD77", // Green label color when focused
-                      },
-                      "& .MuiInputBase-input::placeholder": {
-                        color: "#77DD77", // Green placeholder color
-                        opacity: 1,
-                      },
-                    }}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    label="Last Name"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    error={!!errors.lastName}
-                    helperText={errors.lastName}
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: "16px",
-                      boxShadow: "0px 0px 0px #77DD77",
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#77DD77",
-                          borderRadius: "16px",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#77DD77", // Default label color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "#77DD77", // Green label color when focused
-                      },
-                      "& .MuiInputBase-input::placeholder": {
-                        color: "#77DD77", // Green placeholder color
-                        opacity: 1,
-                      },
-                    }}
-                  />
-                </FormControl>
-              </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <TextField
@@ -196,7 +109,7 @@ const SignupForm = () => {
                         },
                       },
                       "& .MuiInputLabel-root": {
-                        color: "#77DD77", // Default label color
+                        color: "#999", // Default label color
                       },
                       "& .MuiInputLabel-root.Mui-focused": {
                         color: "#77DD77", // Green label color when focused
@@ -231,7 +144,7 @@ const SignupForm = () => {
                         },
                       },
                       "& .MuiInputLabel-root": {
-                        color: "#77DD77", // Default label color
+                        color: "#999", // Default label color
                       },
                       "& .MuiInputLabel-root.Mui-focused": {
                         color: "#77DD77",
@@ -258,10 +171,10 @@ const SignupForm = () => {
                     fontSize: "1.1rem",
                   }}
                 >
-                  Sign Up
+                  Sign In
                 </Button>
                 <Button
-                  onClick={()=>{navigate("/signIN")}}
+                  onClick={()=>{navigate("/signUp")}}
                   type="submit"
                   variant="contained"
                   color="primary"
@@ -273,7 +186,7 @@ const SignupForm = () => {
                     fontSize: "1.1rem",
                   }}
                 >
-                  Sign In
+                  Sign Up
                 </Button>
               </Grid>
             </Grid>
@@ -285,4 +198,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignInForm;
