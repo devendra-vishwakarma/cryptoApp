@@ -1,4 +1,3 @@
-// src/components/CoinsTable.js
 import React, { useEffect, useState } from 'react';
 import { CoinList } from '../config/api';
 import {
@@ -29,12 +28,11 @@ function CoinsTable() {
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
+    const [selectedFavorite, setSelectedFavorite] = useState(null); // State to track selected favorite
 
-    console.log(coins);
-    
     const navigate = useNavigate();
     const { currency } = CryptoState();
-    const  {addToFavorites}  = useFav();
+    const { addToFavorites } = useFav();
 
     const fetchCoins = async () => {
         setLoading(true);
@@ -153,10 +151,10 @@ function CoinsTable() {
                                                 </div>
                                             </TableCell>
                                             <TableCell align="right">
-                                                ${row.current_price.toLocaleString()}
+                                                {currency === "INR" ? "RS" : "$"}{row.current_price.toLocaleString()}
                                             </TableCell>
                                             <TableCell align="right">
-                                                ${row.market_cap.toLocaleString()}
+                                                {currency === "INR" ? "RS" : "$"}{row.market_cap.toLocaleString()}
                                             </TableCell>
                                             <TableCell
                                                 align="right"
@@ -170,11 +168,17 @@ function CoinsTable() {
                                             <TableCell align="right">
                                                 <IconButton
                                                     onClick={(e) => {
-                                                        e.stopPropagation(); 
+                                                        e.stopPropagation();
                                                         addToFavorites(row);
+                                                        setSelectedFavorite(row.id); // Set the selected favorite
                                                     }}
                                                 >
-                                                    <Favorite style={{ color: "white" }} />
+                                                    <Favorite 
+                                                        style={{ 
+                                                            color: selectedFavorite === row.id ? 'gold' : 'white', // Conditionally style icon
+                                                            fontSize: 40 
+                                                        }} 
+                                                    />
                                                 </IconButton>
                                             </TableCell>
                                         </TableRow>
@@ -202,5 +206,4 @@ function CoinsTable() {
         </ThemeProvider>
     );
 }
-
 export default CoinsTable;

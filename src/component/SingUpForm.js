@@ -94,13 +94,13 @@ const SignupForm = () => {
   };
 
   return (
-    <div className='d-flex align-item-center justify-content-around' style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "2rem", border: "1px solid white" }}>
-      <div>
-        <h1> Welcome To Crypto Hunter</h1>
+    <div className='d-flex align-item-center justify-content-around' style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "5rem", border: "1px solid white" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <h1 style={{fontSize:"4rem"}}>Welcome To Crypto <span style={{color:"gold"}}>WORLD</span></h1>
       </div>
       <div
         style={{
-          width: "30%",
+          width: "35%",
           padding: "2rem",
           boxShadow: "0px 4px 20px #77DD77",
           borderRadius: "16px",
