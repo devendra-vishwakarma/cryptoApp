@@ -36,7 +36,6 @@ function App() {
             <Route path='/addCart' element={<FavList />} />
             <Route path='/logout' element={<LogOut />} />
             <Route path='/buysellstock' element={<StockBuySell />} />
-            {/* <Route path='/signUpForm' element={<SignupForm />} /> */}
           </Routes>
         </div>
       </FavProvider>

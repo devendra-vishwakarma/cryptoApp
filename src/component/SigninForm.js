@@ -35,32 +35,34 @@ const SignInForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate fields
     let newErrors = {};
     if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.password) newErrors.password = "Password is required.";
 
-    // Set errors if any
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return; // Stop form submission if there are errors
+      return;
     }
 
-    // Handle form submission (e.g., check credentials)
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser && storedUser.email === formData.email && storedUser.password === formData.password) {
       toast.success("Sign In Successful!");
-      // Redirect or further actions here
     } else {
       toast.error("Invalid credentials");
     }
     setTimeout(() => {
-      navigate("/")
-    }, 500)
+      navigate("/");
+    }, 500);
   };
 
   return (
-    <div className="d-flex align-item-center justify-content-center">
+    <div className="d-flex align-item-center justify-content-between" style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "2rem" }}>
+      <div className="d-flex align-item-center justify-content-center flex-column" style={{ height: "10rem", marginTop: "7.5rem" }}>
+        <h1 style={{ color: "yellow", fontWeight: "bold", fontSize: "5rem", textShadow: "2px 2px 4px yellow" }}>Crypto Hunter</h1>
+        <p className="text-center mt-5" style={{ position: "relative", paddingBottom: "50px" }}>
+          To change the Trading Plan
+        </p>
+      </div>
       <div
         style={{
           width: "30%",
@@ -174,7 +176,7 @@ const SignInForm = () => {
                   Sign In
                 </Button>
                 <Button
-                  onClick={()=>{navigate("/signUp")}}
+                  onClick={() => { navigate("/signUp"); }}
                   type="submit"
                   variant="contained"
                   color="primary"

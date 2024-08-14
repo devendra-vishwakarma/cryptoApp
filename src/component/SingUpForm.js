@@ -7,6 +7,7 @@ import {
   Container,
   Box,
   FormControl,
+  makeStyles,
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,20 @@ import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+
+  // const useStyles = makeStyles(() => ({
+  //   banner: {
+  //     backgroundImage: 'url(./SignUpImage.jpg)',
+  //     backgroundSize: 'cover',
+  //     backgroundPosition: 'center',
+  //     height: '100vh',
+  //     display: 'flex',
+  //     justifyContent: 'center',
+  //     alignItems: 'center',
+  //   },
+  // }));
+
+  // const classes = useStyles();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -79,7 +94,10 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="d-flex align-item-center justify-content-center">
+    <div className='d-flex align-item-center justify-content-around' style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "2rem", border: "1px solid white" }}>
+      <div>
+        <h1> Welcome To Crypto Hunter</h1>
+      </div>
       <div
         style={{
           width: "30%",
@@ -87,7 +105,7 @@ const SignupForm = () => {
           boxShadow: "0px 4px 20px #77DD77",
           borderRadius: "16px",
         }}
-        className="d-flex align-item-center justify-content-center mt-5"
+        className="d-flex align-item-center justify-content-center mt-3"
       >
         <Container
           maxWidth="xs"
@@ -261,7 +279,7 @@ const SignupForm = () => {
                   Sign Up
                 </Button>
                 <Button
-                  onClick={()=>{navigate("/signIN")}}
+                  onClick={() => { navigate("/signIN") }}
                   type="submit"
                   variant="contained"
                   color="primary"
