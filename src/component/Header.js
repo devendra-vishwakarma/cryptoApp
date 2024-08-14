@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Container,
@@ -12,14 +12,13 @@ import {
   Typography,
   IconButton,
   Badge,
-  Menu
+  Menu,
+  TextField
 } from '@material-ui/core';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// Import ShoppingCartIcon
 import { CryptoState } from '../CryptoContext';
 import LogOut from './LogOut';
 import { useNavigate } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
 
 function HomeIcon(props) {
   return (
@@ -28,7 +27,6 @@ function HomeIcon(props) {
     </SvgIcon>
   );
 }
-
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -40,6 +38,12 @@ const useStyles = makeStyles(() => ({
   },
   cartIcon: {
     marginLeft: 20
+  },
+  search: {
+    marginRight: 20,
+    width: 300,
+    backgroundColor: '#333',
+    borderRadius: 5,
   }
 }));
 
@@ -47,7 +51,7 @@ function Header() {
   const classes = useStyles();
   const { currency, setCurrency } = CryptoState();
   const navigate = useNavigate();
-  console.log(currency);
+  const [search, setSearch] = useState(""); // State for search input
 
   // State for Cart Menu
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -74,13 +78,15 @@ function Header() {
     <ThemeProvider theme={darkTheme}>
       <AppBar color='transparent' position='static'>
         <Container>
-          <Toolbar className='d-flex align-item-center justify-content-between'>
+          <Toolbar className='d-flex align-items-center justify-content-between'>
             <Typography
               className={classes.title}
               variant='h6'
             >
               Crypto <span>Hunter</span>
             </Typography>
+
+
             <Typography style={{
               height: 40,
               aspectRatio: 1,
@@ -89,7 +95,7 @@ function Header() {
               alignItems: "center",
               justifyContent: 'center'
             }}>
-              <div onClick={()=>{navigate("/")}}>
+              <div onClick={() => { navigate("/") }}>
                 <HomeIcon color="action" />
               </div>
               <IconButton
@@ -112,6 +118,7 @@ function Header() {
                 </div>
               </IconButton>
             </Typography>
+
             <Select
               variant='outlined'
               style={{
@@ -125,8 +132,6 @@ function Header() {
               <MenuItem value={'USD'}>USD</MenuItem>
               <MenuItem value={'INR'}>INR</MenuItem>
             </Select>
-
-
 
             <Menu
               anchorEl={anchorEl}

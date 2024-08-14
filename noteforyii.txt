@@ -1,0 +1,147 @@
+/your-project
+├── /yii2-app
+│   ├── /config
+│   ├── /controllers
+│   ├── /models
+│   ├── /views
+│   ├── /web
+│   │   ├── /assets
+│   │   ├── /react       <-- Place React build files here
+│   │   ├── index.php
+│   ├── /runtime
+│   └── /vendor
+├── /react-app
+│   ├── /public
+│   ├── /src
+│   ├── /node_modules
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
+└── /build
+
+
+// views/site/react.php
+<?php
+use yii\helpers\Html;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    <?= Html::cssFile('@web/react/static/css/main.css') ?>
+</head>
+<body>
+    <div id="root"></div>
+    <?= Html::jsFile('@web/react/static/js/main.js') ?>
+</body>
+</html>
+
+
+
+// controllers/SiteController.php
+namespace app\controllers;
+
+use yii\web\Controller;
+
+class SiteController extends Controller
+{
+    public function actionReact()
+    {
+        return $this->render('react'); // Renders the React app
+    }
+}
+
+
+
+// config/web.php
+'components' => [
+    'urlManager' => [
+        'enablePrettyUrl' => true,
+        'showScriptName' => false,
+        'rules' => [
+            '' => 'site/react', // Redirect root to React
+            'react/<action:\w+>' => 'site/react', // Handle React routes
+        ],
+    ],
+],
+
+// src/api/auth.js
+export const checkAuth = async () => {
+    const response = await fetch('/api/checkAuth', {
+        method: 'GET',
+        credentials: 'include', // Ensure cookies/session are included
+    });
+    const data = await response.json();
+    return data.isAuthenticated;
+};
+
+// src/App.js
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import { checkAuth } from './api/auth';
+
+function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const authenticate = async () => {
+            const authStatus = await checkAuth();
+            setIsAuthenticated(authStatus);
+        };
+        authenticate();
+    }, []);
+
+    return (
+        <Router>
+            <Switch>
+                <Route path="/login">
+                    {isAuthenticated ? <Redirect to="/" /> : <LoginPage />}
+                </Route>
+                <Route path="/" exact>
+                    {isAuthenticated ? <HomePage /> : <Redirect to="/login" />}
+                </Route>
+            </Switch>
+        </Router>
+    );
+}
+
+export default App;
+
+
+// src/App.js
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import { checkAuth } from './api/auth';
+
+function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const authenticate = async () => {
+            const authStatus = await checkAuth();
+            setIsAuthenticated(authStatus);
+        };
+        authenticate();
+    }, []);
+
+    return (
+        <Router>
+            <Switch>
+                <Route path="/login">
+                    {isAuthenticated ? <Redirect to="/" /> : <LoginPage />}
+                </Route>
+                <Route path="/" exact>
+                    {isAuthenticated ? <HomePage /> : <Redirect to="/login" />}
+                </Route>
+            </Switch>
+        </Router>
+    );
+}
+
+export default App;
