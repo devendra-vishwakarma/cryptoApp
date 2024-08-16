@@ -52,7 +52,11 @@ const SignupForm = () => {
     });
   };
 
+
   const handleSubmit = (e) => {
+    useEffect(() => {
+      axios.post("http://localhost:3000/signIn", formData);
+    }, [])
     e.preventDefault();
 
     // Validate fields
@@ -96,7 +100,7 @@ const SignupForm = () => {
   return (
     <div className='d-flex align-item-center justify-content-around' style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "5rem", border: "1px solid white" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <h1 style={{fontSize:"4rem"}}>Welcome To Crypto <span style={{color:"gold"}}>WORLD</span></h1>
+        <h1 style={{ fontSize: "4rem" }}>Welcome To Crypto <span style={{ color: "gold" }}>WORLD</span></h1>
       </div>
       <div
         style={{
