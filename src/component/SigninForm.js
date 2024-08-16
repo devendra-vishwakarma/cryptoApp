@@ -11,6 +11,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignInForm = () => {
   const navigate = useNavigate();
@@ -46,6 +47,17 @@ const SignInForm = () => {
 
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser && storedUser.email === formData.email && storedUser.password === formData.password) {
+      const token = localStorage.getItem('token');
+      axios.post("http://localhost:3000/signIn", formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' 
+        }
+      }).then(res=>{
+         console.log(res.data);
+      }).catch(err=>{
+        console.log(err);
+      })
       toast.success("Sign In Successful!");
     } else {
       toast.error("Invalid credentials");

@@ -3,13 +3,14 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import userSignUp from './route/userSignUp.route.js';
 import { dataBaseConnect } from './dataBaseConfig/dbCongif.js';
+import cors from 'cors';
 const app = express();
 dotenv.config();
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 dataBaseConnect();
-
+app.use(cors());
 app.use("/",userSignUp);
 
 app.listen(process.env.PORT,()=>{

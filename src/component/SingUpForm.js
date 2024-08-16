@@ -7,42 +7,26 @@ import {
   Container,
   Box,
   FormControl,
-  makeStyles,
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import validator from "validator"; // Import validator for email validation
+import validator from "validator";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignupForm = () => {
   const navigate = useNavigate();
 
-  // const useStyles = makeStyles(() => ({
-  //   banner: {
-  //     backgroundImage: 'url(./SignUpImage.jpg)',
-  //     backgroundSize: 'cover',
-  //     backgroundPosition: 'center',
-  //     height: '100vh',
-  //     display: 'flex',
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //   },
-  // }));
-
-  // const classes = useStyles();
-
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
+    mobileNumber: ""
   });
 
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
+    mobileNumber: ""
   });
 
   const handleChange = (e) => {
@@ -52,55 +36,56 @@ const SignupForm = () => {
     });
   };
 
-
   const handleSubmit = (e) => {
-    useEffect(() => {
-      axios.post("http://localhost:3000/signIn", formData);
-    }, [])
     e.preventDefault();
 
     // Validate fields
     let newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "First Name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last Name is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    else if (!validator.isEmail(formData.email)) newErrors.email = "Invalid email address.";
 
-    // Email validation
-    if (!formData.email) {
-      newErrors.email = "Email is required.";
-    } else if (!validator.isEmail(formData.email)) {
-      newErrors.email = "Invalid email address.";
-    }
+    if (!formData.password) newErrors.password = "Password is required.";
+    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters long.";
 
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = "Password is required.";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
-    }
+    if (!formData.mobileNumber) newErrors.mobileNumber = "Mobile number is required.";
 
     // Set errors if any
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return; // Stop form submission if there are errors
+      return;
     }
 
-    // Handle form submission (e.g., send to server)
-    localStorage.setItem("user", JSON.stringify(formData));
-    console.log("Form data:", formData);
+    axios.post("http://localhost:3000/signUp", formData)
+      .then((res) => {
+        console.log("Response data:", res.data.token);
+        toast.success("Sign Up Successful!");
+        localStorage.setItem("user", JSON.stringify(formData));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        setTimeout(() => navigate("/signIn"), 1000);
+      })
+      .catch((error) => {
+        console.error("Error during sign up:", error);
+        toast.error("Sign Up Failed!");
+      });
 
     // Clear errors after successful submission
     setErrors({});
-
-    // Display success message
-    toast.success("Sign Up Successful!");
-
-    setTimeout(() => { navigate("/signIn") }, 1000)
   };
 
   return (
-    <div className='d-flex align-item-center justify-content-around' style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "5rem", border: "1px solid white" }}>
+    <div
+      className="d-flex align-item-center justify-content-around"
+      style={{
+        backgroundImage: "url(./banner2.jpg)",
+        backgroundRepeat: "none",
+        padding: "5rem",
+        border: "1px solid white",
+      }}
+    >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <h1 style={{ fontSize: "4rem" }}>Welcome To Crypto <span style={{ color: "gold" }}>WORLD</span></h1>
+        <h1 style={{ fontSize: "4rem" }}>
+          Welcome To Crypto <span style={{ color: "gold" }}>WORLD</span>
+        </h1>
       </div>
       <div
         style={{
@@ -128,74 +113,6 @@ const SignupForm = () => {
               </span>
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    label="First Name"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    error={!!errors.firstName}
-                    helperText={errors.firstName}
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: "16px",
-                      boxShadow: "0px 0px 0px #77DD77",
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#77DD77",
-                          borderRadius: "16px",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#77DD77", // Default label color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "#77DD77", // Green label color when focused
-                      },
-                      "& .MuiInputBase-input::placeholder": {
-                        color: "#77DD77", // Green placeholder color
-                        opacity: 1,
-                      },
-                    }}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    label="Last Name"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    error={!!errors.lastName}
-                    helperText={errors.lastName}
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: "16px",
-                      boxShadow: "0px 0px 0px #77DD77",
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#77DD77",
-                          borderRadius: "16px",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#77DD77", // Default label color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "#77DD77", // Green label color when focused
-                      },
-                      "& .MuiInputBase-input::placeholder": {
-                        color: "#77DD77", // Green placeholder color
-                        opacity: 1,
-                      },
-                    }}
-                  />
-                </FormControl>
-              </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <TextField
@@ -268,6 +185,41 @@ const SignupForm = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Mobile Number"
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
+                    onChange={handleChange}
+                    required
+                    error={!!errors.mobileNumber}
+                    helperText={errors.mobileNumber}
+                    sx={{
+                      backgroundColor: "#fff",
+                      borderRadius: "16px",
+                      boxShadow: "0px 0px 0px #77DD77",
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#77DD77",
+                          borderRadius: "16px",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#77DD77", // Default label color
+                      },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "#77DD77",
+                        fontWeight: "bold", // Green label color when focused
+                      },
+                      "& .MuiInputBase-input::placeholder": {
+                        color: "#77DD77", // Green placeholder color
+                        opacity: 1,
+                      },
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -283,8 +235,8 @@ const SignupForm = () => {
                   Sign Up
                 </Button>
                 <Button
-                  onClick={() => { navigate("/signIN") }}
-                  type="submit"
+                  onClick={() => navigate("/signIn")}
+                  type="button"
                   variant="contained"
                   color="primary"
                   className="p-2 mt-2"
