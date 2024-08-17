@@ -7,13 +7,13 @@ import cors from 'cors';
 const app = express();
 dotenv.config();
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 dataBaseConnect();
 app.use(cors());
-app.use("/",userSignUp);
+app.use("/", userSignUp);
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT, () => {
     console.log(`server run at ${process.env.PORT}`);
-    
+
 })
