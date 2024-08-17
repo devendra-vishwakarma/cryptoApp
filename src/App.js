@@ -80,14 +80,12 @@ function App() {
           <Header />
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/coins/:id' element={<Protected><Coin /></Protected>} />
             <Route path='/signUp' element={<SignupForm />} />
             <Route path='/signIn' element={<SignInForm />} />
 
             {/* Protect the routes that require authentication */}
-            <Route
-              path='/addCart'
-              element={
+            <Route path='/coins/:id' element={<Protected><Coin /></Protected>} />
+            <Route path='/addCart' element={
                 <Protected>
                   <FavList />
                 </Protected>
@@ -101,14 +99,14 @@ function App() {
                 </Protected>
               }
             />
-            <Route
+            {/* <Route
               path='/logout'
               element={
                 <Protected>
                   <LogOut />
                 </Protected>
               }
-            />
+            /> */}
           </Routes>
         </div>
       </FavProvider>

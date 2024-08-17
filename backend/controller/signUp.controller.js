@@ -28,8 +28,8 @@ export const SignUp = async (req, res) => {
         // Generate JWT
         const token = jwt.sign(
             { id: data._id, email: data.email },
-            process.env.SECRETKEY, 
-            { expiresIn: '1h' } 
+            process.env.SECRETKEY,
+            { expiresIn: '1h' }
         );
 
         if (data) {
@@ -47,8 +47,11 @@ export const SignUp = async (req, res) => {
 }
 
 export const SignIn = async (req, res) => {
+   console.log("this is req");
+   
     try {
         const { email, password } = req.body;
+        console.log(req.body);
 
         // Check if the user exists
         const user = await User.findOne({ email });
