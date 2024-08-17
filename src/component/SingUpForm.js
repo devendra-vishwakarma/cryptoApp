@@ -61,12 +61,12 @@ const SignupForm = () => {
         localStorage.setItem("token", JSON.stringify(res.data.token));
         console.log("Response data:", res.data.token);
         toast.success("Sign Up Successful!");
-        navigate("/signIn");
       })
       .catch((error) => {
         console.error("Error during sign up:", error);
         toast.error("Sign Up Failed!");
       });
+    navigate("/signIn");
 
 
     // Clear errors after successful submission

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 function Protected({ children }) {
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     useEffect(() => {
         if (!token) {

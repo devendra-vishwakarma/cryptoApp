@@ -144,9 +144,9 @@ function Header() {
               </MenuItem>
             </Menu>
 
-            <div className='btn btn-outline-secondary'>
+            <div className='btn btn-outline-secondary' onClick={()=>{navigate("/signUp")}}>
               <LogOut />
-              LogOut
+              SingUp
             </div>
           </Toolbar>
         </Container>
