@@ -33,39 +33,44 @@ const SignInForm = () => {
     });
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     let newErrors = {};
     if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.password) newErrors.password = "Password is required.";
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return;
+      return; 
     }
-
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser && storedUser.email === formData.email && storedUser.password === formData.password) {
-      const token = localStorage.getItem('token');
-      axios.post("http://localhost:3000/signIn", formData, {
+  
+    // const storedUser = JSON.parse(localStorage.getItem("user"));
+    // const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
+    
+    console.log(token,"this is tokens");
+    
+    if (token) {
+      axios.post("http://localhost:8080/signIn", formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json' 
+          'Content-Type': 'application/json'
         }
-      }).then(res=>{
-         console.log(res.data);
-      }).catch(err=>{
+      }).then(res => {
+        console.log(res.data);
+        toast.success("Sign In Successful!");
+        navigate("/");
+      }).catch(err => {
         console.log(err);
-      })
-      toast.success("Sign In Successful!");
+        toast.error("Sign In Failed!");
+      });
     } else {
       toast.error("Invalid credentials");
     }
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
   };
+  
 
   return (
     <div className="d-flex align-item-center justify-content-between" style={{ backgroundImage: "url(./banner2.jpg)", backgroundRepeat: "none", padding: "2rem" }}>

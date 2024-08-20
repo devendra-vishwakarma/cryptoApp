@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 function Coin() {
   const { id } = useParams();
   const [coin, setCoin] = useState(null); // Initialize with null
+console.log(id);
 
   const { currency, symbol } = CryptoState();
 

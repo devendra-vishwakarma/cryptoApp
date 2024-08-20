@@ -55,18 +55,19 @@ const SignupForm = () => {
       return;
     }
 
-    axios.post("http://localhost:3000/signUp", formData)
+    axios.post("http://localhost:8080/signUp", formData)
       .then((res) => {
+        sessionStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("token", JSON.stringify(res.data.token));
         console.log("Response data:", res.data.token);
         toast.success("Sign Up Successful!");
-        localStorage.setItem("user", JSON.stringify(formData));
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        setTimeout(() => navigate("/signIn"), 1000);
       })
       .catch((error) => {
         console.error("Error during sign up:", error);
         toast.error("Sign Up Failed!");
       });
+    navigate("/signIn");
+
 
     // Clear errors after successful submission
     setErrors({});
