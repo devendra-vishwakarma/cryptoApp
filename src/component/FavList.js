@@ -4,6 +4,7 @@ import { Delete } from '@mui/icons-material';
 import { useFav } from './FavContext';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
+import { array } from './dataArray';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -65,7 +66,7 @@ const FavList = () => {
                 Favorite Cryptocurrencies
             </Typography>
             <Grid container spacing={4}>
-                {favorites.map((coin) => (
+                {array.map((coin) => (
                     <Grid item xs={12} md={6} lg={4} key={coin.id}>
                         <Card className={classes.card}>
                         <CardMedia

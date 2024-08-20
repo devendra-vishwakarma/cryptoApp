@@ -1,6 +1,7 @@
 // src/FavContext.js
 import React, { createContext, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { array } from './dataArray';
 
 const FavContext = createContext();
 export const useFav = () => {
@@ -14,6 +15,7 @@ export const FavProvider = ({ children }) => {
     const addToFavorites = (coin) => {
         if (coin) {
             setFavorites(prevFavs => [...prevFavs, coin]);
+            array.push(coin);
             alert("sucessfully added");
         }
     };
