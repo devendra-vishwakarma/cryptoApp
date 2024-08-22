@@ -4,9 +4,16 @@ import { Delete } from '@mui/icons-material';
 import { useFav } from './FavContext';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router-dom';
-import { array } from './dataArray';
+
 
 const useStyles = makeStyles((theme) => ({
+    row:{
+         backgroundImage: 'url(./banner2.jpg)',
+         minHeight:"100vh"
+    },
+    boxShadows:{
+        boxShadow:"rgba(0, 0, 0, 0) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px"
+    },
     card: {
         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
         borderRadius: '15px',
@@ -61,12 +68,12 @@ const FavList = () => {
     const classes = useStyles();
 
     return (
-        <Container>
+        <Container className={classes.row}>
             <Typography variant="h4" gutterBottom>
                 Favorite Cryptocurrencies
             </Typography>
-            <Grid container spacing={4}>
-                {array.map((coin) => (
+            <Grid container spacing={4} className={classes.boxShadows}>
+                {favorites.map((coin) => (
                     <Grid item xs={12} md={6} lg={4} key={coin.id}>
                         <Card className={classes.card}>
                         <CardMedia

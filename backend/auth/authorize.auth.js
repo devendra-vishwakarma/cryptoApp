@@ -4,7 +4,7 @@ export const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (authHeader) {
-        const token = authHeader.split(' ')[1];  // Extract token from `Bearer <token>`
+        const token = authHeader.split(' ')[1];  
 
         console.log("token",token.slice(1,-1));
         console.log("token",token.replaceAll('"', ''));
@@ -13,14 +13,14 @@ export const authenticateJWT = (req, res, next) => {
         jwt.verify(token.slice(1,-1), process.env.SECRETKEY, (err, user) => {
             if (err) {
                 console.log(err);
-                return res.sendStatus(403);  // Invalid token, access denied
+                return res.sendStatus(403);  
             }
             console.log("user",user);
 
-            req.user = user;  // Attach decoded user information to the request object
-            next();           // Pass control to the next middleware/route handler
+            req.user = user;  
+            next();           
         });
     } else {
-        res.sendStatus(401);  // No token provided, unauthorized access
+        res.sendStatus(401);  
     }
 };

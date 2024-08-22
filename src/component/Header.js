@@ -65,6 +65,11 @@ function Header() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    navigate("/signin");
+  }
+
   const darkTheme = createTheme({
     palette: {
       primary: {
@@ -144,9 +149,11 @@ function Header() {
               </MenuItem>
             </Menu>
 
-            <div className='btn btn-outline-secondary' onClick={()=>{navigate("/signUp")}}>
-              <LogOut />
-              SingUp
+            <div className='btn btn-outline-secondary' onClick={() => { navigate("/signUp");
+              handleLogout()
+             }}>
+              <LogOut/>
+              {sessionStorage.getItem("token") ? "logout" : "login"}
             </div>
           </Toolbar>
         </Container>
