@@ -73,8 +73,7 @@ console.log(id);
 
   useEffect(() => {
     fetchCoin();
-  }, []); //dependency =
-
+  }, []); 
   const classes = useStyles(); // Call useStyles()
 
   if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />; // Fix color and remove unnecessary curly brace

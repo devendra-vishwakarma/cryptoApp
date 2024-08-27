@@ -22,19 +22,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// Configure Multer to use a custom folder name
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'custom-uploads'); // Specify the custom folder name
+    cb(null, 'custom-uploads'); 
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname); // Keep the original file name
+    cb(null, file.originalname); 
   }
 });
 
 const upload = multer({ storage });
 
-// API Route for file upload
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const result = await cloudinary.v2.uploader.upload(req.file.path);
@@ -44,13 +43,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// Import and use user signup routes
 app.use("/", userSignUp);
 
-// Database connection
 dataBaseConnect();
 
-// Start server
 app.listen(process.env.PORT, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}`);
 });

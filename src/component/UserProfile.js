@@ -1,7 +1,8 @@
 import { CCol, CForm, CFormInput, CImage, CRow, CButton } from "@coreui/react";
+import axios from "axios";
 import React, { useState } from "react";
 
-const StockBuySell = () => {
+const UserProfile = () => {
     const [userData, setUserData] = useState({});
     const [userImage, setUserImage] = useState();
 
@@ -18,7 +19,15 @@ const StockBuySell = () => {
         e.preventDefault();
         console.log("Form data:", userData);
         console.log("Selected image:", userImage);
-        // Add form submission logic here
+
+        axios.post("http://localhost:8080/upload")
+        .then(res=>{
+            console.log(res);
+            setUserImage(res.data.imageUrl)
+        }).catch(error=>{
+            console.log("badahi hoon error ayi hain")
+            console.log(error);
+        })
     };
 
     return (
@@ -138,4 +147,4 @@ const StockBuySell = () => {
     );
 };
 
-export default StockBuySell;
+export default UserProfile;

@@ -8,10 +8,11 @@ import SignupForm from './component/SingUpForm';
 import FavList from './component/FavList';
 import { FavProvider } from './component/FavContext';
 import LogOut from './component/LogOut';
-import StockBuySell from './component/StockBuySell';
 import CryptoContext from './CryptoContext';
 import SignInForm from './component/SigninForm';
 import Protected from './component/ProtectedRoute/Protected';
+import UserProfile from './component/UserProfile';
+
 
 
 const useStyles = makeStyles(() => ({
@@ -44,10 +45,10 @@ function App() {
               }
             />
             <Route
-              path='/buysellstock'
+              path='/userprofile'
               element={
                 // <Protected>
-                  <StockBuySell />
+                  <UserProfile />
                 // </Protected>
               }
             />
